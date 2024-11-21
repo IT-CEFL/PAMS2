@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/frankie/public_html/pams.cefl4u.org/
+    - /bin/cp -R * $DEPLOYPATH.
