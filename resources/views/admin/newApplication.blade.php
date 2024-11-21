@@ -59,7 +59,7 @@
                                                     <td>{{$row->applicationNumber}}</td>
                                                     <td>{{$row->user->name}}</td>
                                                     <td>{{$row->user->email}}</td>
-                                                    <td>{{$row->type->typeName}}</td>
+                                                    <td>{{$row->type->TypeName}}</td>
                                                     <td>
                                                         @if($row->user->centre->id == 1)
                                                             {{$row->user->centre->CentreName." - ".$row->user->dept->DeptName}}

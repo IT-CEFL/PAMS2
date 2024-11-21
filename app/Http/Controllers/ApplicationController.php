@@ -105,11 +105,11 @@ class ApplicationController extends Controller
                 $users = User::where('roleID',$firstApp->Approver)->get();
             }
 
-            Mail::to("zhufri@cambridgeforlife.org")->send(new sendMail($app));
+            // Mail::to("zhufri@cambridgeforlife.org")->send(new sendMail($app));
 
-            // foreach($users as $sendTo){
-                // Mail::to($sendTo->email)->send(new sendMail($email_data));
-            // }
+            foreach($users as $sendTo){
+                Mail::to($sendTo->email)->send(new sendMail($email_data));
+            }
 
             Alert::success('Sucessful.', 'Application have been successfully submitted.');
         }
@@ -142,7 +142,7 @@ class ApplicationController extends Controller
             return redirect('/');
         } else {
             $applications = Application::find($id);
-            $applicationTrack = ApplicationTracking::where('ApplicationID',$id)->orderBy('created_at')->orderBy('updated_at')->get();
+            $applicationTrack = ApplicationTracking::where('ApplicationID',$id)->orderBy('created_at')->get();
 
             return view('viewApplicationDetails')->with(compact('user', 'applications', 'applicationTrack'));
         }
@@ -296,11 +296,11 @@ class ApplicationController extends Controller
                 $users = User::where('roleID',$nextApp->Approver)->get();
             }
 
-            Mail::to("zhufri@cambridgeforlife.org")->send(new sendMail($app));
+            // Mail::to("zhufri@cambridgeforlife.org")->send(new sendMail($app));
 
-            // foreach($users as $sendTo){
-                // Mail::to($sendTo->email)->send(new sendMail($email_data));
-            // }
+            foreach($users as $sendTo){
+                Mail::to($sendTo->email)->send(new sendMail($email_data));
+            }
             Alert::success('Sucessful.', 'Application request have been successfully updated.');
             return back();
         }
@@ -786,11 +786,11 @@ class ApplicationController extends Controller
                 $users = User::where('roleID',$nextApp->Approver)->get();
             }
 
-            Mail::to("zhufri@cambridgeforlife.org")->send(new sendMail($app));
+            // Mail::to("zhufri@cambridgeforlife.org")->send(new sendMail($app));
 
-            // foreach($users as $sendTo){
-                // Mail::to($sendTo->email)->send(new sendMail($email_data));
-            // }
+            foreach($users as $sendTo){
+                Mail::to($sendTo->email)->send(new sendMail($email_data));
+            }
             Alert::success('Sucessful.', 'Application tracking have been successfully updated.');
             return back();
         }
@@ -829,8 +829,8 @@ class ApplicationController extends Controller
             }
             $applications->pendings = json_encode($newPending);
 
-            Mail::to("zhufri@cambridgeforlife.org")->send(new sendMail($applications));
-            // Mail::to($applications->user->email)->send(new sendMail($applications));
+            // Mail::to("zhufri@cambridgeforlife.org")->send(new sendMail($applications));
+            Mail::to($applications->user->email)->send(new sendMail($applications));
 
         }elseif($request->status == "Approved-Pending Docs"){            
             $applications->disbursedAmount = $request->lmd;
@@ -888,12 +888,12 @@ class ApplicationController extends Controller
                 
                 $users = User::where('id', $applications->previousApp)->get();
                 
-                Mail::to("zhufri@cambridgeforlife.org")->send(new sendMail($applications));
-                // if(!$users->isEmpty()){
-                //     foreach($users as $sendTo){
-                //         Mail::to($sendTo->email)->send(new sendMail($applications));
-                //     }
-                // }
+                // Mail::to("zhufri@cambridgeforlife.org")->send(new sendMail($applications));
+                if(!$users->isEmpty()){
+                    foreach($users as $sendTo){
+                        Mail::to($sendTo->email)->send(new sendMail($applications));
+                    }
+                }
 
                 $applications->previousApp = $user->id;
             }else{
@@ -959,8 +959,8 @@ class ApplicationController extends Controller
                 $app->pendings = json_encode(array_values($newPending));
             }
 
-            Mail::to("zhufri@cambridgeforlife.org")->send(new sendMail($app));
-            // Mail::to($applications->user->email)->send(new sendMail($app));
+            // Mail::to("zhufri@cambridgeforlife.org")->send(new sendMail($app));
+            Mail::to($applications->user->email)->send(new sendMail($app));
 
         }elseif($request->status == "Approved-Pending Docs"){
             $app->disbursedAmount = $request->lmd;
@@ -992,12 +992,12 @@ class ApplicationController extends Controller
             if($app->previousApp->email != NULL){
                 $users = User::where('id', $app->previousApp)->get();
                 
-                Mail::to("zhufri@cambridgeforlife.org")->send(new sendMail($app));
-                // if(!$users->isEmpty()){
-                //     foreach($users as $sendTo){
-                //         Mail::to($sendTo->email)->send(new sendMail($applications));
-                //     }
-                // }
+                // Mail::to("zhufri@cambridgeforlife.org")->send(new sendMail($app));
+                if(!$users->isEmpty()){
+                    foreach($users as $sendTo){
+                        Mail::to($sendTo->email)->send(new sendMail($applications));
+                    }
+                }
 
                 $app->previousApp = $user->id;
             }else{
